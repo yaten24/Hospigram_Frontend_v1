@@ -20,9 +20,10 @@ export const NAV = [
 function AccountMenu() {
   const { role, account, logout } = useAuth();
   const navigate = useNavigate();
-  const [open, setOpen] = useState(false);
   const { pathname } = useLocation();
-  useEffect(() => setOpen(false), [pathname]);
+  const [openPath, setOpenPath] = useState(null);
+  const open = openPath === pathname;
+  const setOpen = (v) => setOpenPath((typeof v === "function" ? v(open) : v) ? pathname : null);
   if (!role) return null;
   const home = homeFor(role, account);
   const roleLabel = role === "admin" ? "Admin" : role === "provider" ? (account?.kind === "lab" ? "Lab" : "Hospital") : "Patient";
@@ -74,9 +75,10 @@ function AccountMenu() {
 function Navbar() {
   const { role } = useAuth();
   const { pathname } = useLocation();
-  const [open, setOpen] = useState(false);
+  const [openPath, setOpenPath] = useState(null);
+  const open = openPath === pathname;
+  const setOpen = (v) => setOpenPath((typeof v === "function" ? v(open) : v) ? pathname : null);
   const [scrolled, setScrolled] = useState(false);
-  useEffect(() => setOpen(false), [pathname]);
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
     onScroll();
@@ -92,9 +94,9 @@ function Navbar() {
     <header className={cx("sticky top-0 z-50 border-b bg-white/90 backdrop-blur-md transition-shadow", scrolled ? "border-ink-100 shadow-[0_8px_24px_-18px_rgb(15_23_46/0.35)]" : "border-transparent")}>
       <div className="container-page flex h-16 items-center gap-6">
         <Logo />
-        <nav className="ml-4 hidden items-center gap-1 lg:flex" aria-label="Main">
+        <nav className="ml-2 hidden items-center gap-0.5 xl:flex" aria-label="Main">
           {NAV.map((l) => (
-            <NavLink key={l.to} to={l.to} className={({ isActive }) => cx("relative rounded-md px-3 py-2 text-sm font-semibold transition", isActive ? "text-brand-700" : "text-ink-600 hover:text-ink-900")}>
+            <NavLink key={l.to} to={l.to} className={({ isActive }) => cx("relative whitespace-nowrap rounded-md px-3 py-2 text-sm font-semibold transition", isActive ? "text-brand-700" : "text-ink-600 hover:text-ink-900")}>
               {({ isActive }) => (
                 <>
                   {l.label}
@@ -109,7 +111,7 @@ function Navbar() {
             <AccountMenu />
           ) : (
             <>
-              <Link to="/login" className="hidden rounded-md px-3 py-2 text-sm font-semibold text-ink-700 hover:bg-ink-100 sm:block">
+              <Link to="/login" className="hidden whitespace-nowrap rounded-md px-3 py-2 text-sm font-semibold text-ink-700 hover:bg-ink-100 sm:block">
                 Log in
               </Link>
               <Button as={Link} to="/book" size="md" icon={CalendarCheck} className="hidden sm:inline-flex">
@@ -117,7 +119,7 @@ function Navbar() {
               </Button>
             </>
           )}
-          <button onClick={() => setOpen(true)} className="grid h-10 w-10 place-items-center rounded-md text-ink-700 hover:bg-ink-100 lg:hidden" aria-label="Open menu">
+          <button onClick={() => setOpen(true)} className="grid h-10 w-10 place-items-center rounded-md text-ink-700 hover:bg-ink-100 xl:hidden" aria-label="Open menu">
             <Menu className="h-5 w-5" />
           </button>
         </div>
@@ -125,7 +127,7 @@ function Navbar() {
 
       <AnimatePresence>
         {open && (
-          <div className="fixed inset-0 z-[60] lg:hidden">
+          <div className="fixed inset-0 z-[60] xl:hidden">
             <motion.div className="absolute inset-0 bg-ink-950/50" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setOpen(false)} />
             <motion.nav
               className="absolute inset-y-0 right-0 flex w-[85%] max-w-sm flex-col bg-white"

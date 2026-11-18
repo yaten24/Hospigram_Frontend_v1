@@ -234,7 +234,7 @@ export function ProviderRegister({ kind }) {
       icon={c.icon}
       wide
       title={`Register your ${c.noun}`}
-      subtitle="Our team verifies every partner before it is listed. This usually takes one working day."
+      subtitle="Our team verifies every partner before it is listed on Hospigram."
       footer={
         <>
           Already registered?{" "}
@@ -434,7 +434,7 @@ export function PartnersPage() {
         <Reveal delay={0.2} className="mx-auto mt-10 grid max-w-4xl gap-4 rounded-lg border border-ink-100 bg-white p-6 sm:grid-cols-3">
           {[
             ["1", "Register", "Tell us about your facility and services."],
-            ["2", "Get verified", "Our team checks the details, usually within a working day."],
+            ["2", "Get verified", "Our team checks your details before you are listed."],
             ["3", "Receive bookings", "Confirm requests and manage them from your dashboard."],
           ].map(([nIdx, t, d]) => (
             <div key={nIdx} className="flex gap-3">

@@ -1,5 +1,5 @@
 // Dashboard frame for admin, hospital and lab panels: sidebar (desktop), slide-in drawer (mobile), header, page outlet.
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link, NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { ExternalLink, LogOut, Menu, X } from "lucide-react";
@@ -16,8 +16,9 @@ export default function PanelShell({ links, label, banner }) {
   const { account, logout } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-  const [open, setOpen] = useState(false);
-  useEffect(() => setOpen(false), [location.pathname]);
+  const [openPath, setOpenPath] = useState(null);
+  const open = openPath === location.pathname;
+  const setOpen = (v) => setOpenPath((typeof v === "function" ? v(open) : v) ? location.pathname : null);
   const current = [...links].sort((a, b) => b.to.length - a.to.length).find((l) => (l.end ? location.pathname === l.to : location.pathname.startsWith(l.to)));
 
   const doLogout = () => {

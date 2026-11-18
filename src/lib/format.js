@@ -108,6 +108,7 @@ export function useLoad(fetcher, params) {
       .catch((error) => id === seq.current && setState((s) => ({ ...s, loading: false, error })));
   }, [key]);
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- fetching on mount / when params change is the point of this hook
     load();
   }, [load]);
   const setData = useCallback((fn) => setState((s) => ({ ...s, data: typeof fn === "function" ? fn(s.data) : fn })), []);
