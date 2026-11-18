@@ -29,7 +29,7 @@ function AccountMenu() {
   const roleLabel = role === "admin" ? "Admin" : role === "provider" ? (account?.kind === "lab" ? "Lab" : "Hospital") : "Patient";
   return (
     <div className="relative">
-      <button onClick={() => setOpen((o) => !o)} className="flex items-center gap-2 rounded-md py-1 pl-1 pr-2 transition hover:bg-ink-100" aria-expanded={open} aria-haspopup="menu">
+      <button onClick={() => setOpen((o) => !o)} className="flex items-center gap-2 rounded-md py-1 pl-1 pr-2 transition hover:bg-ink-100" aria-expanded={open} aria-haspopup="menu" aria-label="Account menu">
         <Avatar name={account?.name} size="sm" />
         <span className="hidden max-w-[120px] truncate text-sm font-semibold text-ink-800 lg:block">{account?.name?.split(" ")[0]}</span>
         <ChevronDown className="h-4 w-4 text-ink-400" aria-hidden="true" />

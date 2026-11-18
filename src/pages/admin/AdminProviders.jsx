@@ -28,7 +28,7 @@ import {
 } from "../../components/ui";
 import { PasswordInput } from "../auth/AuthShell";
 import { adminApi } from "../../lib/api";
-import { CITIES, HOSPITAL_SERVICES, LAB_SERVICES, STATUS, formatDate, formatDateTime, isEmail, isPhone, n, passwordProblem, useForm, useLoad } from "../../lib/format";
+import { CITIES, HOSPITAL_SERVICES, LAB_SERVICES, STATUS, formatDate, formatDateTime, isEmail, isPhone, n, passwordProblem, useForm, useLoad, fullAddress } from "../../lib/format";
 import { refreshAdminBadges, useQueryState, useUrlSearch } from "./AdminLayout";
 
 const COPY = {
@@ -453,7 +453,7 @@ function ProviderDetails({ p, c }) {
           <p className="flex items-start gap-1 text-sm text-ink-700">
             <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-ink-400" aria-hidden="true" />
             <span>
-              {[p.address, p.city, p.pincode].filter(Boolean).join(", ") || "No address"}
+              {fullAddress(p.address, p.city, p.pincode) || "No address"}
             </span>
           </p>
           <div className="mt-2 flex flex-wrap gap-1.5">

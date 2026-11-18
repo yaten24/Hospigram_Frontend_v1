@@ -133,3 +133,14 @@ export function useForm(initial) {
 export const isPhone = (v) => /^[6-9]\d{9}$/.test(String(v).replace(/[\s-]/g, "").replace(/^(\+91|91|0)(?=\d{10}$)/, ""));
 export const isEmail = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(String(v).trim());
 export const passwordProblem = (v) => (v.length < 8 ? "At least 8 characters" : !/[A-Za-z]/.test(v) || !/\d/.test(v) ? "Use at least one letter and one number" : "");
+
+/** "Plot 12, Sector 62, Noida" + "Noida" + "201309" -> "Plot 12, Sector 62, Noida 201309" (skips parts the address already has) */
+export function fullAddress(address, city, pincode) {
+  const a = String(address || "").trim();
+  const lower = a.toLowerCase();
+  const parts = [a];
+  if (city && !lower.includes(String(city).toLowerCase())) parts.push(city);
+  let out = parts.filter(Boolean).join(", ");
+  if (pincode && !lower.includes(String(pincode))) out = `${out}${out ? " " : ""}${pincode}`;
+  return out;
+}

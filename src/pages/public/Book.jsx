@@ -8,7 +8,7 @@ import { Badge, Button, Card, EmptyState, ErrorState, Pagination, SearchInput, S
 import BookingForm from "../../components/BookingForm";
 import { ProviderCover } from "../../components/ProviderCard";
 import { publicApi } from "../../lib/api";
-import { CITIES, KIND_LABEL, useDebounced, useLoad } from "../../lib/format";
+import { CITIES, KIND_LABEL, useDebounced, useLoad, fullAddress } from "../../lib/format";
 
 const STEPS = ["Type of care", "Choose provider", "Pick a slot"];
 const KINDS = [
@@ -203,7 +203,7 @@ function BookProvider({ id, onChange }) {
         <div className="min-w-0 flex-1">
           <p className="text-xs font-semibold uppercase tracking-wide text-ink-500">{KIND_LABEL[p.kind]}</p>
           <p className="truncate font-display font-bold text-ink-900">{p.name}</p>
-          {p.city && <p className="truncate text-xs text-ink-500">{[p.address, p.city].filter(Boolean).join(", ")}</p>}
+          {p.city && <p className="truncate text-xs text-ink-500">{fullAddress(p.address, p.city)}</p>}
         </div>
         <Button variant="ghost" size="sm" onClick={() => onChange(p.kind)}>
           Change

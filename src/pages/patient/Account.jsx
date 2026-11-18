@@ -26,7 +26,7 @@ import { PasswordInput } from "../auth/AuthShell";
 import { Avatar, Badge, Button, Card, ConfirmDialog, EmptyState, ErrorState, Field, FormAlert, Input, Select, Skeleton, StatusBadge, Tabs, Textarea, cx } from "../../components/ui";
 import { useAuth } from "../../context/AuthContext";
 import { authApi, patientApi, tokenStore } from "../../lib/api";
-import { CITIES, KIND_LABEL, SUPPORT_PHONE, SUPPORT_PHONE_LINK, formatDate, formatTime, isEmail, passwordProblem, todayIST, useForm, useLoad } from "../../lib/format";
+import { CITIES, KIND_LABEL, SUPPORT_PHONE, SUPPORT_PHONE_LINK, formatDate, formatTime, isEmail, passwordProblem, todayIST, useForm, useLoad, fullAddress } from "../../lib/format";
 
 const telLink = (phone) => `tel:${String(phone || "").startsWith("+") ? phone : `+91${phone}`}`;
 const mapsLink = (...parts) => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(parts.filter(Boolean).join(", "))}`;
@@ -165,7 +165,7 @@ function BookingCard({ a, index, onCancel }) {
             {p.address && (
               <p className="mt-3 flex items-start gap-2 text-xs text-ink-500">
                 <MapPin className="mt-0.5 h-3.5 w-3.5 shrink-0" aria-hidden="true" />
-                <span className="min-w-0 break-words">{[p.address, p.city].filter(Boolean).join(", ")}</span>
+                <span className="min-w-0 break-words">{fullAddress(p.address, p.city)}</span>
               </p>
             )}
           </div>

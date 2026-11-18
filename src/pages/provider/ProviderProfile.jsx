@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 import { Badge, Button, Card, Checkbox, Field, FormAlert, Input, Select, Textarea, cx } from "../../components/ui";
 import { useAuth } from "../../context/AuthContext";
 import { authApi } from "../../lib/api";
-import { CITIES, HOSPITAL_SERVICES, LAB_SERVICES, KIND_LABEL, isPhone, useForm } from "../../lib/format";
+import { CITIES, HOSPITAL_SERVICES, LAB_SERVICES, KIND_LABEL, isPhone, useForm, fullAddress } from "../../lib/format";
 import { useProviderPanel } from "./ProviderLayout";
 
 function ServicePicker({ options, value, onChange, id }) {
@@ -112,7 +112,7 @@ function PreviewCard({ v, kind, approved }) {
         <div className="mt-3 space-y-1.5 text-sm text-ink-600">
           <p className="flex items-start gap-2">
             <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-ink-400" aria-hidden="true" />
-            <span className="min-w-0 break-words">{[v.address, v.city, v.pincode].filter(Boolean).join(", ") || "Address"}</span>
+            <span className="min-w-0 break-words">{fullAddress(v.address, v.city, v.pincode) || "Address"}</span>
           </p>
           {v.timings && (
             <p className="flex items-center gap-2">

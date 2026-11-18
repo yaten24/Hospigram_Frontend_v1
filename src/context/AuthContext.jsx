@@ -24,7 +24,8 @@ export function AuthProvider({ children }) {
     authApi
       .me()
       .then(({ role, account }) => setState({ role, account, loading: false }))
-      .catch(() => logout());
+      // only a rejected session logs out; a network blip keeps the token so a reload can recover
+      .catch((err) => (err.status === 401 || err.status === 403 ? logout() : setState({ role: null, account: null, loading: false })));
   }, [logout]);
 
   /** Stores a login/register response ({ token, role, account }) */

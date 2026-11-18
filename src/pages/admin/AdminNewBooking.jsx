@@ -24,7 +24,7 @@ import {
 import toast from "react-hot-toast";
 import { Avatar, Badge, Button, Card, Checkbox, EmptyState, ErrorState, Field, FormAlert, Input, SearchInput, Skeleton, StatusBadge, Tabs, Textarea, cx } from "../../components/ui";
 import { adminApi } from "../../lib/api";
-import { KIND_LABEL, addDays, formatDate, formatTime, isPhone, slotPeriod, timeSlots, todayIST, useDebounced, useLoad } from "../../lib/format";
+import { KIND_LABEL, addDays, formatDate, formatTime, isPhone, slotPeriod, timeSlots, todayIST, useDebounced, useLoad, fullAddress } from "../../lib/format";
 import { CreatePatientForm, TempPasswordModal } from "./AdminPatients";
 
 const STEPS = ["Patient", "Hospital or lab", "Date & time", "Review"];
@@ -564,7 +564,7 @@ function ReviewStep({ patient, provider, details, onBack, onEdit, onBooked }) {
         </Section>
         <Section onEdit={onEdit} title={KIND_LABEL[provider.kind]} step={1}>
           <p className="font-semibold text-ink-900">{provider.name}</p>
-          <p className="text-xs text-ink-500">{[provider.address, provider.city].filter(Boolean).join(", ")}</p>
+          <p className="text-xs text-ink-500">{fullAddress(provider.address, provider.city)}</p>
         </Section>
         <Section onEdit={onEdit} title="When" step={2}>
           <p className="flex items-center gap-1.5 font-semibold text-ink-900">
